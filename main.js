@@ -60,6 +60,7 @@ class Character {
         const escapeHope = 50 - enemy.escapePenalty; 
         if (scapeChance > escapeHope) {
             console.log(`%c${EMOJIS.escapE} ${this.name} tries to escape but fails!`, `color: green; font-weight: bold`);
+            enemy.attackCharacter(this); 
         } else {
             console.log(`%c${EMOJIS.escapE} ${this.name} successfully escapes!`, `color: green; font-weight: bold`);
             return true;
@@ -113,6 +114,8 @@ function gameLoop() {
 
     // Battle starts
     while (player.hp > 0 && enemy.hp > 0) {
+        // it your turn
+        console.log(`%c It's ${EMOJIS.attack} ${player.name} ${EMOJIS.attack} turn`, `color: blue; font-weight: bold`);  
         const action = prompt("Select the number of an action:\n 1. Attack\n 2. Magic\n 3. Heal\n 4. Escape");
         if (action === "1") {
             player.attackEnemy(enemy);
@@ -122,12 +125,12 @@ function gameLoop() {
             player.heal();
         } else if (action === "4") {
             if (player.tryToEscape(enemy)) {
-                break;
-            }
+                return;
         } else {
             console.log("Invalid action. Please enter a number between 1 and 4.");
         }
     }
+}
     
     // Enemy attacks
     if (enemy.hp > 0) {
