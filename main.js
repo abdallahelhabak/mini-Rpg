@@ -89,10 +89,8 @@ class Enemy {
 // Create Evil characters of Harry Potter world
 function randomEnemy() {
     const enemies = [
-        new Enemy("Draco", 100, 10),
         new Enemy("Bellatrix", 100, 20),
-        new Enemy("Lucius", 100, 30),
-        new Enemy("Voldemort", 100, 40),
+        new Enemy("Lord Voldemort", 100, 40),
         new Enemy("Peter Pettigrew", 65, 75),          
         new Enemy("Draco Malfoy", 60, 70),             
         new Enemy("Quirinus Quirrell", 70, 65),        
@@ -126,6 +124,9 @@ function gameLoop() {
             if (player.tryToEscape(enemy)) {
                 break;
             }
+        } else {
+            console.log("Invalid action. Please enter a number between 1 and 4.");
+        }
     }
     
     // Enemy attacks
@@ -139,4 +140,4 @@ function gameLoop() {
     } else if (enemy.hp < 0) {
         console.log(`%c${EMOJIS.win} ${player.name} has defeated ${enemy.name}!`, `color: green; font-weight: bold`);
     }
-}
+
