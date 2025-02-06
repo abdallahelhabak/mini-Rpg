@@ -24,7 +24,7 @@ class Character {
     // attackEnemy function to attack the enemy
     attackEnemy(enemy) {
         
-        const damage = Math.max(1, this.attack - enemy.defense);
+        const damage = Math.max(10, this.attack - enemy.defense);
         enemy.hp -= damage;
         console.log(`%c${EMOJIS.attack} ${this.name} attacks ${enemy.name} for ${damage} damage!`, `color: red; font-weight: bold` );
         console.log(`${enemy.name} has ${enemy.hp} HP left`);
@@ -33,7 +33,7 @@ class Character {
     // cast Magic function to cast magic on the enemy
     castMagic(enemy) {
         if (this.magicCount > 0) {
-            const damage = Math.max(4, this.magicAttack - enemy.defense);
+            const damage = Math.max(20, this.magicAttack - enemy.defense);
             enemy.hp -= damage;
             this.magicCount--;
             console.log(`%c${EMOJIS.magic} ${this.name} casts Avada Kedavra ${EMOJIS.defeat}  on ${enemy.name} for ${damage} damage!`, `color: blue; font-weight: bold`);
@@ -115,7 +115,6 @@ function gameLoop() {
     // Battle starts
     while (player.hp > 0 && enemy.hp > 0) {
         // it your turn
-        console.log(`%c It's ${EMOJIS.attack} ${player.name} ${EMOJIS.attack} turn`, `color: blue; font-weight: bold`);  
         const action = prompt("Select the number of an action:\n 1. Attack\n 2. Magic\n 3. Heal\n 4. Escape");
         if (action === "1") {
             player.attackEnemy(enemy);
@@ -126,24 +125,25 @@ function gameLoop() {
         } else if (action === "4") {
             if (player.tryToEscape(enemy)) {
                 return;
+            }
         } else {
             console.log("Invalid action. Please enter a number between 1 and 4.");
         }
+
+        // Enemy attacks
+        if (enemy.hp > 0) {
+            enemy.attackCharacter(player);
+        }
     }
-}
-    
-    // Enemy attacks
-    if (enemy.hp > 0) {
-        enemy.attackCharacter(player);
-    }
-    }
+
     // Check who won
     if (player.hp <= 0) {
         console.log(`%c${EMOJIS.defeat} ${player.name} has been defeated by ${enemy.name}!`, `color: red; font-weight: bold`);
-    } else if (enemy.hp < 0) {
+    } else if (enemy.hp <= 0) {
         console.log(`%c${EMOJIS.win} ${player.name} has defeated ${enemy.name}!`, `color: green; font-weight: bold`);
     }
+}
 
-    // to run the code you have to call the function
-    // gameLoop();
+// to run the code you have to call the function
+// gameLoop();
 
