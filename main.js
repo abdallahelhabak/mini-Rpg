@@ -85,3 +85,19 @@ class Enemy {
     }
 }
 
+// Create Evil characters of Harry Potter world
+function randomEnemy() {
+    const enemies = [
+        new Enemy("Draco", 100, 10),
+        new Enemy("Bellatrix", 100, 20),
+        new Enemy("Lucius", 100, 30),
+        new Enemy("Voldemort", 100, 40),
+        new Enemy("Peter Pettigrew", 65, 75),          
+        new Enemy("Draco Malfoy", 60, 70),             
+        new Enemy("Quirinus Quirrell", 70, 65),        
+        new Enemy("Dolores Umbridge", 75, 65),        
+        new Enemy("Lucius Malfoy", 70, 60)
+    ];
+    return enemies[Math.floor(Math.random() * enemies.length)];
+}
+
