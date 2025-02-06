@@ -144,3 +144,6 @@ function gameLoop() {
         console.log(`%c${EMOJIS.win} ${player.name} has defeated ${enemy.name}!`, `color: green; font-weight: bold`);
     }
 
+    // to run the code you have to call the function
+    // gameLoop();
+
