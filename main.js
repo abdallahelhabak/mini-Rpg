@@ -17,21 +17,31 @@ class Character {
         this.attack = Math.floor(Math.random() * 15) + 10;
         this.defense = Math.floor(Math.random() * 10) + 5;
         this.healcount = 3;
+        this.magicCount = 3; // Add a counter for magic attacks
     }
+    
     
     // attackEnemy function to attack the enemy
     attackEnemy(enemy) {
-        const damage = Math.max(this.attack - enemy.defense);
+        
+        const damage = Math.max(1, this.attack - enemy.defense);
         enemy.hp -= damage;
         console.log(`%c${EMOJIS.attack} ${this.name} attacks ${enemy.name} for ${damage} damage!`, `color: red; font-weight: bold` );
         console.log(`${enemy.name} has ${enemy.hp} HP left`);
     }
+    
     // cast Magic function to cast magic on the enemy
     castMagic(enemy) {
-        const damage = Math.max(this.magicAttack - enemy.defense);
-        enemy.hp -= damage;
-        console.log(`%c${EMOJIS.magic} ${this.name} casts magic on ${enemy.name} for ${damage} damage!`, `color: blue; font-weight: bold`);
-        console.log(`${enemy.name} has ${enemy.hp} HP left`);
+        if (this.magicCount > 0) {
+            const damage = Math.max(4, this.magicAttack - enemy.defense);
+            enemy.hp -= damage;
+            this.magicCount--;
+            console.log(`%c${EMOJIS.magic} ${this.name} casts magic on ${enemy.name} for ${damage} damage!`, `color: blue; font-weight: bold`);
+            console.log(`${enemy.name} has ${enemy.hp} HP left`);
+            console.log(`${this.name} can cast magic ${this.magicCount} more times`);
+        } else {
+            console.log(`%c${this.name} has no more magic attacks left!`, `color: blue; font-weight: bold`);
+        }
     }
     // heal function to heal the character
     heal() {
@@ -59,20 +69,19 @@ class Character {
 }
 // Create the enemy class
 class Enemy {
-    constructor(name,hp,attack,defense,escapePenalty) {
+    constructor(name,hp,escapePenalty) {
         this.name = name;
         this.hp = hp;
-        this.attack = attack;
-        this.defense = defense;
+        this.attack = Math.floor(Math.random() * 15) + 10;
+        this.defense = Math.floor(Math.random() * 10) + 5;
         this.escapePenalty = escapePenalty;
     }
     // attack function to attack the character
     attackCharacter(character) {
-        const damage = Math.max(this.attack - character.defense);
+        const damage = Math.max(1,this.attack - character.defense);
         character.hp -= damage;
         console.log(`%c${this.name} attacks ${character.name} for ${damage} damage!`, `color: red; font-weight: bold`);
         console.log(`${character.name} has ${character.hp} HP left`);
     }
-    
 }
 
