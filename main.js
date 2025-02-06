@@ -57,3 +57,22 @@ class Character {
         
     }
 }
+// Create the enemy class
+class Enemy {
+    constructor(name,hp,attack,defense,escapePenalty) {
+        this.name = name;
+        this.hp = hp;
+        this.attack = attack;
+        this.defense = defense;
+        this.escapePenalty = escapePenalty;
+    }
+    // attack function to attack the character
+    attackCharacter(character) {
+        const damage = Math.max(this.attack - character.defense);
+        character.hp -= damage;
+        console.log(`%c${this.name} attacks ${character.name} for ${damage} damage!`, `color: red; font-weight: bold`);
+        console.log(`${character.name} has ${character.hp} HP left`);
+    }
+    
+}
+
