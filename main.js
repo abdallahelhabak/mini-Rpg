@@ -82,7 +82,7 @@ class Enemy {
     attackCharacter(character) {
         const damage = Math.max(1,this.attack - character.defense);
         character.hp -= damage;
-        console.log(`%c${this.name} attacks ${character.name} for ${damage} damage!`, `color: red; font-weight: bold`);
+        console.log(`%c ${EMOJIS.attack} ${this.name} attacks ${character.name} for ${damage} damage!`, `color: red; font-weight: bold`);
         console.log(`${character.name} has ${character.hp} HP left`);
     }
 }
