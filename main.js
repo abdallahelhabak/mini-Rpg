@@ -36,7 +36,7 @@ class Character {
             const damage = Math.max(4, this.magicAttack - enemy.defense);
             enemy.hp -= damage;
             this.magicCount--;
-            console.log(`%c${EMOJIS.magic} ${this.name} casts magic on ${enemy.name} for ${damage} damage!`, `color: blue; font-weight: bold`);
+            console.log(`%c${EMOJIS.magic} ${this.name} casts Avada Kedavra ${EMOJIS.defeat}  on ${enemy.name} for ${damage} damage!`, `color: blue; font-weight: bold`);
             console.log(`${enemy.name} has ${enemy.hp} HP left`);
             console.log(`${this.name} can cast magic ${this.magicCount} more times`);
         } else {
@@ -55,7 +55,7 @@ class Character {
             console.log(`%c${this.name} has no more heals left!`, `color: green; font-weight: bold`);
         }
     }
-    tryToScape(enemy) {
+    tryToEscape(enemy) {
         const scapeChance = Math.floor(Math.random() * 100);
         const escapeHope = 50 - enemy.escapePenalty; 
         if (scapeChance > escapeHope) {
@@ -63,6 +63,7 @@ class Character {
         } else {
             console.log(`%c${EMOJIS.escapE} ${this.name} successfully escapes!`, `color: green; font-weight: bold`);
             return true;
+
         }
         
     }
@@ -101,3 +102,41 @@ function randomEnemy() {
     return enemies[Math.floor(Math.random() * enemies.length)];
 }
 
+// Create the  main function of the RPG to start the battle
+function gameLoop() {
+    const playerName = prompt("Enter the name of your character from Harry Potter world: ");
+    const player = new Character(playerName); // Create a new character
+    let enemy = randomEnemy();
+
+
+    // when enemy appears
+    console.log(`%cAn enemy ${enemy.name} has appeared!`, `color: red; font-weight: bold`);
+    console.log(`%c${player.name} vs ${enemy.name}`, `color: green; font-weight: bold`);
+
+    // Battle starts
+    while (player.hp > 0 && enemy.hp > 0) {
+        const action = prompt("Select the number of an action:\n 1. Attack\n 2. Magic\n 3. Heal\n 4. Escape");
+        if (action === "1") {
+            player.attackEnemy(enemy);
+        } else if (action === "2") {
+            player.castMagic(enemy);
+        } else if (action === "3") {
+            player.heal();
+        } else if (action === "4") {
+            if (player.tryToEscape(enemy)) {
+                break;
+            }
+    }
+    
+    // Enemy attacks
+    if (enemy.hp > 0) {
+        enemy.attackCharacter(player);
+    }
+    }
+    // Check who won
+    if (player.hp <= 0) {
+        console.log(`%c${EMOJIS.defeat} ${player.name} has been defeated by ${enemy.name}!`, `color: red; font-weight: bold`);
+    } else if (enemy.hp < 0) {
+        console.log(`%c${EMOJIS.win} ${player.name} has defeated ${enemy.name}!`, `color: green; font-weight: bold`);
+    }
+}
